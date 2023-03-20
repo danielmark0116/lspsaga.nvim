@@ -308,7 +308,6 @@ function act:get_action_diff(num, main_buf)
     if not action then
       return
     end
-    self.action_tuples[tonumber(num)][2] = action
   end
 
   if not action.edit then
