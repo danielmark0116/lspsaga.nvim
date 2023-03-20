@@ -1,5 +1,22 @@
 local api = vim.api
 
+local function get_colors()
+  return {
+    red = '#e95678',
+    magenta = '#b33076',
+    orange = '#FF8700',
+    yellow = '#f7bb3b',
+    green = '#afd700',
+    cyan = '#36d0e0',
+    blue = '#61afef',
+    purple = '#CBA6F7',
+    white = '#d1d4cf',
+    black = '#1c1c19',
+    gray = '#6e6b6b',
+    fg = '#f2f2bf',
+  }
+end
+
 local function theme_normal()
   local conf = api.nvim_get_hl_by_name('Normal', true)
   if conf.background then
@@ -9,36 +26,36 @@ local function theme_normal()
 end
 
 local function hi_define()
+  local colors = get_colors()
   local bg = theme_normal()
   return {
     -- general
-    TitleString = { link = 'Title' },
-    TitleIcon = { link = 'Repeat' },
-    SagaBorder = { link = 'FloatBorder' },
+    TitleString = { fg = colors.fg },
+    TitleIcon = { fg = colors.red },
+    SagaBorder = { bg = bg, fg = colors.blue },
     SagaNormal = { bg = bg },
-    SagaExpand = { fg = '#475164' },
-    SagaCollapse = { fg = '#475164' },
-    SagaCount = { link = 'Comment' },
-    SagaBeacon = { bg = '#c43963' },
+    SagaExpand = { fg = colors.red },
+    SagaCollapse = { fg = colors.red },
+    SagaBeacon = { bg = colors.magenta },
     -- code action
     ActionPreviewNormal = { link = 'SagaNormal' },
     ActionPreviewBorder = { link = 'SagaBorder' },
-    ActionPreviewTitle = { link = 'Title' },
+    ActionPreviewTitle = { fg = colors.purple, bg = bg },
     CodeActionNormal = { link = 'SagaNormal' },
     CodeActionBorder = { link = 'SagaBorder' },
-    CodeActionText = {},
-    CodeActionNumber = { link = 'DiffAdd' },
+    CodeActionText = { fg = colors.orange },
+    CodeActionNumber = { fg = colors.green },
     -- finder
-    FinderSelection = { link = '@variable' },
-    FinderFileName = { link = 'Comment' },
-    FinderCount = { link = 'Constant' },
-    FinderIcon = { link = 'Type' },
-    FinderType = { link = 'Type' },
+    FinderSelection = { fg = colors.cyan, bold = true },
+    FinderFileName = { fg = colors.white },
+    FinderCount = { link = 'Label' },
+    FinderIcon = { fg = colors.cyan },
+    FinderType = { fg = colors.purple },
     --finder spinner
-    FinderSpinnerTitle = { link = 'Statement' },
-    FinderSpinner = { link = 'Statement' },
+    FinderSpinnerTitle = { fg = colors.magenta, bold = true },
+    FinderSpinner = { fg = colors.magenta, bold = true },
     FinderPreviewSearch = { link = 'Search' },
-    FinderVirtText = { link = 'Operator' },
+    FinderVirtText = { fg = colors.red },
     FinderNormal = { link = 'SagaNormal' },
     FinderBorder = { link = 'SagaBorder' },
     FinderPreviewBorder = { link = 'SagaBorder' },
@@ -51,26 +68,25 @@ local function hi_define()
     HoverBorder = { link = 'SagaBorder' },
     -- rename
     RenameBorder = { link = 'SagaBorder' },
-    RenameNormal = { link = 'Statement' },
+    RenameNormal = { fg = colors.orange, bg = bg },
     RenameMatch = { link = 'Search' },
     -- diagnostic
     DiagnosticBorder = { link = 'SagaBorder' },
-    DiagnosticSource = { link = 'Comment' },
+    DiagnosticSource = { fg = 'gray' },
     DiagnosticNormal = { link = 'SagaNormal' },
-    DiagnosticPos = { link = 'Comment' },
-    DiagnosticWord = {},
-    DiagnosticHead = {},
+    DiagnosticPos = { fg = colors.gray },
+    DiagnosticWord = { fg = colors.fg },
     -- Call Hierachry
     CallHierarchyNormal = { link = 'SagaNormal' },
     CallHierarchyBorder = { link = 'SagaBorder' },
-    CallHierarchyIcon = { link = 'TitleIcon' },
-    CallHierarchyTitle = { link = 'Title' },
+    CallHierarchyIcon = { fg = colors.purple },
+    CallHierarchyTitle = { fg = colors.red },
     -- lightbulb
-    SagaLightBulb = { link = 'DiagnosticSignHint' },
+    LspSagaLightBulb = { link = 'DiagnosticSignHint' },
     -- shadow
-    SagaShadow = { link = 'FloatShadow' },
+    SagaShadow = { bg = colors.black },
     -- Outline
-    OutlineIndent = { fg = '#806d9e' },
+    OutlineIndent = { fg = colors.magenta },
     OutlinePreviewBorder = { link = 'SagaNormal' },
     OutlinePreviewNormal = { link = 'SagaBorder' },
     -- Float term
@@ -87,4 +103,5 @@ end
 
 return {
   init_highlight = init_highlight,
+  get_colors = get_colors,
 }
