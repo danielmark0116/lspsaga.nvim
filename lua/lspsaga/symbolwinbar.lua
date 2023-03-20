@@ -12,8 +12,8 @@ end
 
 local function bar_prefix()
   return {
-    prefix = '%#SagaWinbar',
-    sep = '%#SagaWinbarSep#' .. config.separator .. '%*',
+    prefix = '%#LspSagaWinbar',
+    sep = '%#LspSagaWinbarSep#' .. config.separator .. '%*',
   }
 end
 
@@ -58,9 +58,9 @@ local function bar_file_name(buf)
   for i, v in pairs(res) do
     if i == #res then
       if #data > 0 then
-        table.insert(items, '%#SagaWinbarFileIcon#' .. data[1] .. ' ' .. '%*')
+        table.insert(items, '%#LspSagaWinbarFileIcon#' .. data[1] .. ' ' .. '%*')
 
-        local ok, conf = pcall(api.nvim_get_hl_by_name, 'SagaWinbarFileIcon', true)
+        local ok, conf = pcall(api.nvim_get_hl_by_name, 'LspSagaWinbarFileIcon', true)
         if not ok then
           conf = {}
         end
@@ -72,13 +72,13 @@ local function bar_file_name(buf)
 
         api.nvim_set_hl(
           0,
-          'SagaWinbarFileIcon',
+          'LspSagaWinbarFileIcon',
           vim.tbl_extend('force', conf, {
             foreground = data[2],
           })
         )
       end
-      table.insert(items, bar.prefix .. 'FileName#' .. v .. '%*')
+      table.insert(items, bar.prefix .. 'File#' .. v .. '%*')
     else
       table.insert(
         items,
@@ -366,7 +366,7 @@ function symbar:register_events(buf)
     desc = 'Lspsaga symbols render and request',
   })
 
-  api.nvim_create_autocmd('InsertLeave', {
+  api.nvim_create_autocmd({ 'TextChanged', 'InsertLeave' }, {
     group = augroup,
     buffer = buf,
     callback = function()
@@ -387,16 +387,6 @@ function symbar:register_events(buf)
       clean_buf_cache(buf)
     end,
   })
-end
-
-local function match_ignore(buf)
-  local fname = api.nvim_buf_get_name(buf)
-  for _, pattern in pairs(config.ignore_patterns) do
-    if fname:find(pattern) then
-      return true
-    end
-  end
-  return false
 end
 
 function symbar:symbol_autocmd()
@@ -429,11 +419,6 @@ function symbar:symbol_autocmd()
           bar_prefix().prefix .. ' #',
           { scope = 'local', win = winid }
         )
-      end
-
-      --ignored after folder file prefix set
-      if match_ignore(opt.buf) then
-        return
       end
 
       if not self[opt.buf] then

@@ -41,7 +41,7 @@ require("lazy").setup({
         require("lspsaga").setup({})
     end,
     dependencies = {
-      {"nvim-tree/nvim-web-devicons"},
+      {"nvim-tree/nvim-web-devicons"}
       --Please make sure you install markdown and markdown_inline parser
       {"nvim-treesitter/nvim-treesitter"}
     }
@@ -58,7 +58,7 @@ use({
         require("lspsaga").setup({})
     end,
     requires = {
-        {"nvim-tree/nvim-web-devicons"},
+        {"nvim-tree/nvim-web-devicons"}
         --Please make sure you install markdown and markdown_inline parser
         {"nvim-treesitter/nvim-treesitter"}
     }
@@ -191,6 +191,7 @@ You can find the documentation for Lspsaga in Neovim by using `:h lspsaga`.
   request_timeout = 2000,
 ```
 
+
 ## :Lspsaga lsp_finder
 
 A `finder` to show the defintion, reference and implementation (only shown when current hovered word is a function, a type, a class, or an interface).
@@ -200,14 +201,12 @@ Default options:
   finder = {
     --percentage
     max_height = 0.5,
-    force_max_height = false
     keys = {
       jump_to = 'p',
       edit = { 'o', '<CR>' },
       vsplit = 's',
       split = 'i',
       tabe = 't',
-      tabnew = 'r',
       quit = { 'q', '<ESC>' },
       close_in_preview = '<ESC>'
     },
@@ -215,21 +214,20 @@ Default options:
 ```
 
 - `max_height` of the finder window.
-- `force_max_height` force window height to max_height
 - `keys.jump_to` finder peek window.
 - `close_in_preview` will close all finder window in when you in preview window.
 
 <details>
 <summary>lsp_finder showcase</summary>
 
-<img src="https://user-images.githubusercontent.com/41671631/215719819-4bfe6e86-fecc-4dc0-bac0-837c0bdeb349.gif" height=80% width=80%/>
+<img
+src="https://user-images.githubusercontent.com/41671631/215719819-4bfe6e86-fecc-4dc0-bac0-837c0bdeb349.gif" height=80% width=80%/>
 </details>
 
 
 ## :Lspsaga peek_definition
 
-There are two commands, `:Lspsaga peek_definition` and `:Lspsaga goto_definition`. The `peek_definition`
-command works like the VSCode command of the same name, which shows the target file in an editable floating window.
+There are two commands, `:Lspsaga peek_definition` and `:Lspsaga goto_definition`. The `peek_definition` command works like the VSCode command of the same name, which shows the target file in an editable floating window.
 
 Default options:
 ```lua
@@ -239,6 +237,7 @@ Default options:
     split = "<C-c>i",
     tabe = "<C-c>t",
     quit = "q",
+    close = "<Esc>",
   }
 ```
 
@@ -251,7 +250,8 @@ The steps demonstrated in this showcase are:
 - Pressing `<C-c>o` to jump to the file in the floating window
 - Lspsaga shows a beacon highlight after jumping to the file
 
-<img src="https://user-images.githubusercontent.com/41671631/215719806-0dea0248-4a2c-45df-a258-43a4ba207a43.gif" height=80% width=80%/>
+<img
+src="https://user-images.githubusercontent.com/41671631/215719806-0dea0248-4a2c-45df-a258-43a4ba207a43.gif" height=80% width=80%/>
 </details>
 
 ## :Lspsaga goto_definition
@@ -266,7 +266,7 @@ Default options:
   code_action = {
     num_shortcut = true,
     show_server_name = false,
-    extend_gitsigns = true,
+    extend_gitsigns = true
     keys = {
       -- string | table type
       quit = "q",
@@ -310,8 +310,7 @@ Default options:
 
 ## :Lspasga hover_doc
 
-You should install the [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) markdown and markdown_line parser.
-Lspsaga can use it to render the hover window.
+You should install the [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) markdown parser so Lspsaga can use it to render the hover window.
 You can press the keyboard shortcut for `:Lspsaga hover_doc` twice to enter the hover window.
 
 <details>
@@ -333,10 +332,6 @@ Jumps to next diagnostic position and show a beacon highlight. Lspsaga will then
 Default options:
 ```lua
   diagnostic = {
-    on_insert = true,
-    on_insert_follow = false,
-    insert_winblend = 0,
-    show_virt_line = true,
     show_code_action = true,
     show_source = true,
     jump_num_shortcut = true,
@@ -354,7 +349,6 @@ Default options:
   },
 ```
 
-- `show_virt_line` default is true, show a line when using diagnostic jump. false disable it.
 - Using `go_action`, you can quickly jump to line where actions need to be taken in the diagnostics floating window.
 - `jump_num_shortcut` - The default is `true`. After jumping, Lspasga will automatically bind code actions to a number. Afterwards, you can press the number to execute the code action. After the floating window is closed, these numbers will no longer be tied to the same code actions.
 - `custom_msg` string used to custom the diagnostic jump `Msg` section titile
@@ -364,10 +358,6 @@ Default options:
   text color
 - `border_follow` the border highlight will follow the diagnostic type. if false it will use the
   highlight `DiagnosticBorder`.
-- `on_insert` default is true it works like the emacs helix show diagnostic in right but in line.
-- `on_insert_follow` true will follow current line. false will on top right
-- `insert_winblend` default is 0, when it's to 100 will completely transparent. the color will
-  changed a little light. 0 will use the `NormalFloat` group. it will link to `Normal` by Lspsaga.
 
 You can also use a filter when using diagnostic jump by using a Lspsaga function. The function takes a table as its argument.
 It is functionally identical to `:h vim.diagnostic.get_next`.
@@ -379,25 +369,17 @@ require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERR
 ```
 
 <details>
-<summary> showcase</summary>
+<summary>diagnostic_jump_next showcase</summary>
 
 The steps demonstrated in this showcase are:
 - Pressing `[e` to jump to the next diagnostic position, which shows the beacon highlight and the code actions in a diagnostic window
 - Pressing the number `2` to execute the code action without needing to enter the floating window
 
-<img src="https://user-images.githubusercontent.com/41671631/219829469-ea0e6367-a8ad-4e07-b890-0115848bbc9f.gif" height=80% width=80%/>
+<img src="https://user-images.githubusercontent.com/41671631/215725463-36065017-91b6-401a-b48b-764179eaeb5e.gif" height=80% width=80%/>
 
 - If you want to see the code action, you can use `<C-w>w` to enter the floating window.
 - Press `g` to go to the action line and see the code action preview.
 - Press `o` to execute the action.
-
-`on_insert` is true, `on_insert_follow` is false
-
-<img src="https://user-images.githubusercontent.com/41671631/219940539-da554175-dd91-4bca-aaf8-ab39d0ba2a2c.gif" height=80% width=80%/>
-
-`on_insert_follow` is true
-
-<img src="https://user-images.githubusercontent.com/41671631/219909443-f5b4f796-e59d-47cf-9f9a-8a9a69d92449.gif" height=80% width=80%/>
 
 
 </details>
@@ -411,7 +393,7 @@ The steps demonstrated in this showcase are:
 <details>
 <summary>show_diagnostics showcase</summary>
 
-<img src="https://user-images.githubusercontent.com/41671631/219829470-9b49a6c2-5ded-4b3f-ab38-96cce32d0435.gif" height=80% width=80%/>
+<img src="https://user-images.githubusercontent.com/41671631/215719847-c09e84c0-c19a-4365-bd16-87800e3685cc.gif" height=80% width=80%/>
 </details>
 
 ## :Lspsaga rename
@@ -516,7 +498,6 @@ Default options:
   symbol_in_winbar = {
     enable = true,
     separator = " ",
-    ignore_patterns={},
     hide_keyword = true,
     show_file = true,
     folder_level = 2,
@@ -528,8 +509,6 @@ Default options:
 - `folder_level` only works when `show_file` is `true`.
 - `respect_root` will respect the LSP's root. If this is `true`, Lspsaga will ignore the `folder_level` option. If no LSP client is being used, Lspsaga will fall back to using folder level.
 - `color_mode` - The default value is `true`. When it is set to `false`, only icons will have color.
-- `ignore_patterns` table type when fileanme matched the pattern will ignore render symbols. if
-  show_file is true. the file name will still set.
 
 <details>
 <summary>Symbols in winbar</summary>
@@ -573,14 +552,18 @@ after jump from float window there will show beacon to remind you where the curs
 Default UI options
 ```lua
   ui = {
+    -- Currently, only the round theme exists
+    theme = "round",
     -- This option only works in Neovim 0.9
     title = true,
     -- Border type can be single, double, rounded, solid, shadow.
-    border = "single",
+    border = "solid",
     winblend = 0,
     expand = "",
     collapse = "",
+    preview = " ",
     code_action = "💡",
+    diagnostic = "🐞",
     incoming = " ",
     outgoing = " ",
     hover = ' ',
@@ -592,37 +575,28 @@ Default UI options
 
 All highlight groups can be found in [highlight.lua](./lua/lspsaga/highlight.lua).
 
-`require('lspsaga.lspkind').get_kind_group()` will return all the SagaWinbar + kind name group . also 
-include `SagaWinbarFileName SagaWinbarFileIcon SagaWinbarFolderName SagaWinbarSep`. These groups are 
-special. so if you want use this api to custom the highlight. you need dealwith these 4 groups the
-last item is `SagaWinbarSep`.
-
-
 # Custom Kind
 
 Modify `ui.kind` to change the icons of the kinds.
 
 All kinds used in Lspsaga are defined in [lspkind.lua](./lua/lspsaga/lspkind.lua).
-The key in `ui.kind` is the kind name, and the value can either be a string or a table. If a string is passed, it is setting the `icon`. If table is passed, it will be passed as `{ icon, highlight group }`, for example, to change the a folder's icon color, you could do this: `ui = { kind = { ["Folder"] = { " ", "@comment" }, }, },`.
-
-# Donate
-
-Currently, I am in need of some donations. If you'd like to support my work financially, please donate through Github Sponsor button or 
-[PayPal](https://paypal.me/bobbyhub). Thanks!
-[![](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/bobbyhub)
-
+The key in `ui.kind` is the kind name, and the value can either be a string or a table. If a string is passed, it is setting the `icon`. If table is passed, it will be passed as `{ icon, color }`.
 
 # Backers
-Thanks for everyone!
+Thanks for everything!
 
-[Scott Ming](https://github.com/scottming)
 [@Möller Lukas](https://github.com/lmllrjr)
 [@HendrikPetertje](https://github.com/HendrikPetertje)
 [@Bojan Wilytsch](https://github.com/bwilytsch)
 [@zhourrr](https://github.com/zhourrr)
 [@Burgess Darrion](https://github.com/ca-mantis-shrimp)
-[@Ceserani Alessandro](https://github.com/al-ce)
 
+# Donate
+
+[![](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/bobbyhub)
+
+Currently, I am in need of some donations. If you'd like to support my work financially, please donate through [PayPal](https://paypal.me/bobbyhub).
+Thanks!
 
 # License
 

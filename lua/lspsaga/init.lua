@@ -10,24 +10,19 @@ local default_config = {
     expand = '',
     collapse = '',
     code_action = '💡',
+    diagnostic = '🐞',
     incoming = ' ',
     outgoing = ' ',
     hover = ' ',
-    diagnostic = ' ',
     kind = {},
   },
-  hover = {
-    max_width = 0.6,
-  },
   diagnostic = {
-    on_insert = true,
-    on_insert_follow = false,
-    insert_winblend = 0,
-    show_virt_line = true,
     show_code_action = true,
     show_source = true,
     jump_num_shortcut = true,
     max_width = 0.7,
+    custom_fix = nil,
+    custom_msg = nil,
     text_hl_follow = false,
     border_follow = true,
     keys = {
@@ -39,7 +34,7 @@ local default_config = {
   code_action = {
     num_shortcut = true,
     show_server_name = false,
-    extend_gitsigns = false,
+    extend_gitsigns = true,
     keys = {
       quit = 'q',
       exec = '<CR>',
@@ -65,14 +60,12 @@ local default_config = {
   finder = {
     --percentage
     max_height = 0.5,
-    force_max_height = false,
     keys = {
       jump_to = 'p',
       edit = { 'o', '<CR>' },
       vsplit = 's',
       split = 'i',
       tabe = 't',
-      tabnew = 'r',
       quit = { 'q', '<ESC>' },
       close_in_preview = '<ESC>',
     },
@@ -83,6 +76,7 @@ local default_config = {
     split = '<C-c>i',
     tabe = '<C-c>t',
     quit = 'q',
+    close = '<Esc>',
   },
   rename = {
     quit = '<C-c>',
@@ -93,7 +87,6 @@ local default_config = {
   },
   symbol_in_winbar = {
     enable = true,
-    ignore_patterns = {},
     separator = ' ',
     hide_keyword = true,
     show_file = true,
@@ -146,10 +139,6 @@ function saga.setup(opts)
 
   if saga.config.symbol_in_winbar.enable then
     require('lspsaga.symbolwinbar'):symbol_autocmd()
-  end
-
-  if saga.config.diagnostic.on_insert then
-    require('lspsaga.diagnostic'):on_insert()
   end
 end
 
