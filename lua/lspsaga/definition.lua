@@ -228,7 +228,6 @@ function def:peek_definition(method)
       contents = {},
       enter = true,
       bufnr = res.bufnr,
-      filetype = vim.bo[current_buf].filetype,
       highlight = {
         border = 'DefinitionBorder',
         normal = 'DefinitionNormal',
