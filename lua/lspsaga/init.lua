@@ -13,7 +13,6 @@ local default_config = {
     incoming = ' ',
     outgoing = ' ',
     hover = ' ',
-    diagnostic = ' ',
     kind = {},
   },
   hover = {
