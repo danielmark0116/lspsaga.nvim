@@ -242,8 +242,7 @@ function libs.get_client_by_cap(caps)
     ['table'] = function(instance)
       libs.add_client_filetypes(instance, { vim.bo.filetype })
       if
-        instance.server_capabilities[caps[1]]
-        and instance.server_capabilities[caps[2]]
+        vim.tbl_get(instance.server_capabilities, unpack(caps))
         and libs.has_value(instance.config.filetypes, vim.bo.filetype)
       then
         return instance
@@ -252,7 +251,7 @@ function libs.get_client_by_cap(caps)
     end,
   }
 
-  local clients = vim.lsp.buf_get_clients()
+  local clients = lsp.get_active_clients({ bufnr = 0 })
   local client
   for _, instance in pairs(clients) do
     client = client_caps[type(caps)](instance)
